@@ -2,7 +2,6 @@ package com.anaclarissi.health_diary.service;
 
 import com.anaclarissi.health_diary.model.Meal;
 import com.anaclarissi.health_diary.repository.MealRepository;
-import com.anaclarissi.health_diary.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
