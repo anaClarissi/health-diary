@@ -1,6 +1,6 @@
 package com.anaclarissi.health_diary.controller;
 
-import com.anaclarissi.health_diary.model.Excercise;
+import com.anaclarissi.health_diary.model.Exercise;
 import com.anaclarissi.health_diary.service.ExcerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,37 +12,37 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/excercise")
-public class ExcerciseController {
+public class ExerciseController {
 
     @Autowired
     private ExcerciseService service;
 
     @GetMapping
-    public ResponseEntity<List<Excercise>> findAll() {
+    public ResponseEntity<List<Exercise>> findAll() {
 
-        List<Excercise> list = service.findAll();
+        List<Exercise> list = service.findAll();
 
         return ResponseEntity.ok().body(list);
 
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Excercise> findById(@PathVariable Long id) {
+    public ResponseEntity<Exercise> findById(@PathVariable Long id) {
 
-        Excercise excercise = service.findById(id);
+        Exercise exercise = service.findById(id);
 
-        return ResponseEntity.ok().body(excercise);
+        return ResponseEntity.ok().body(exercise);
 
     }
 
     @PostMapping
-    public ResponseEntity<Excercise> insert(@RequestBody Excercise excercise) {
+    public ResponseEntity<Exercise> insert(@RequestBody Exercise exercise) {
 
-        excercise = service.insert(excercise);
+        exercise = service.insert(exercise);
 
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(excercise.getId()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(exercise.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(excercise);
+        return ResponseEntity.created(uri).body(exercise);
 
     }
 
@@ -56,11 +56,11 @@ public class ExcerciseController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Excercise> update(@PathVariable Long id, @RequestBody Excercise excercise) {
+    public ResponseEntity<Exercise> update(@PathVariable Long id, @RequestBody Exercise exercise) {
 
-        excercise = service.update(id, excercise);
+        exercise = service.update(id, exercise);
 
-        return ResponseEntity.ok().body(excercise);
+        return ResponseEntity.ok().body(exercise);
 
     }
 

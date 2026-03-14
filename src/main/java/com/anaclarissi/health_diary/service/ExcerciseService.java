@@ -1,7 +1,7 @@
 package com.anaclarissi.health_diary.service;
 
-import com.anaclarissi.health_diary.model.Excercise;
-import com.anaclarissi.health_diary.repository.ExcerciseRepository;
+import com.anaclarissi.health_diary.model.Exercise;
+import com.anaclarissi.health_diary.repository.ExerciseRepository;
 import com.anaclarissi.health_diary.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +13,9 @@ import java.util.Optional;
 public class ExcerciseService {
 
     @Autowired
-    private ExcerciseRepository repository;
+    private ExerciseRepository repository;
 
-    public List<Excercise> findAll() {
+    public List<Exercise> findAll() {
 
         try {
 
@@ -23,29 +23,29 @@ public class ExcerciseService {
 
         } catch (Exception e) {
 
-            throw new RuntimeException("Excercise Service findAll Error -> " + e.getMessage());
+            throw new RuntimeException("Exercise Service findAll Error -> " + e.getMessage());
 
         }
 
     }
 
-    public Excercise findById(Long id) {
+    public Exercise findById(Long id) {
 
-        Optional<Excercise> excercise = repository.findById(id);
+        Optional<Exercise> excercise = repository.findById(id);
 
-        return excercise.orElseThrow(() ->  new RuntimeException("Excercise Service findById Error"));
+        return excercise.orElseThrow(() ->  new RuntimeException("Exercise Service findById Error"));
 
     }
 
-    public Excercise insert(Excercise excercise) {
+    public Exercise insert(Exercise exercise) {
 
         try {
 
-            return repository.save(excercise);
+            return repository.save(exercise);
 
         } catch (Exception e) {
 
-            throw new RuntimeException("Excercise Service insert Error -> " + e.getMessage());
+            throw new RuntimeException("Exercise Service insert Error -> " + e.getMessage());
 
         }
 
@@ -59,20 +59,44 @@ public class ExcerciseService {
 
         } catch (Exception e) {
 
-            throw new RuntimeException("Excercise Service deleteById Error -> " + e.getMessage());
+            throw new RuntimeException("Exercise Service deleteById Error -> " + e.getMessage());
 
 
         }
 
     }
 
-    public Excercise update(Long id, Excercise excercise) {
+    public Exercise update(Long id, Exercise exercise) {
 
-        Excercise entity = repository.getReferenceById(id);
+        try {
 
-        Util.updateData(entity, excercise);
+            Exercise entity = repository.getReferenceById(id);
 
-        return entity;
+            updateDate(entity, exercise);
+
+            return entity;
+
+        } catch (Exception e) {
+
+            throw new RuntimeException("Exercise Service findAll Error -> " + e.getMessage());
+
+        }
+
+    }
+
+    private void updateDate(Exercise entity, Exercise exercise) {
+
+        entity.setDate(exercise.getDate());
+
+        entity.setName(exercise.getName());
+
+        entity.setSeries(exercise.getSeries());
+
+        entity.setRepetitions(exercise.getRepetitions());
+
+        entity.setLoad(exercise.getLoad());
+
+        entity.setTime(exercise.getTime());
 
     }
 
