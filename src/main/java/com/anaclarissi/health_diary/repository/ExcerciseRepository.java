@@ -1,9 +1,9 @@
 package com.anaclarissi.health_diary.repository;
 
-import com.anaclarissi.health_diary.model.Exercise;
+import com.anaclarissi.health_diary.model.Excercise;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
+public interface ExcerciseRepository extends JpaRepository<Excercise, Long> {
 }

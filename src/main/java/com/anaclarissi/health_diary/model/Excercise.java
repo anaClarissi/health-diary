@@ -1,5 +1,6 @@
 package com.anaclarissi.health_diary.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +15,8 @@ import java.time.LocalTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Exercise implements Serializable {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Excercise implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
