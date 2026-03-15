@@ -1,8 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-
 :root {
-
-    --primary-font: 'Roboto';
 
     /*INDEX PAGE*/
     --text-color: #333;
@@ -12,36 +8,13 @@
     --button-color-hover: #ae9aaa;
     --primary-color: #fff;
 
-    /*CRUD PAGE*/
-    --background-color-gradient-01: #ae9aaa;
-    --background-color-gradient-02: #d7c7c7;
-    --header-color: #5c1758;
-    --menu-background-color: #8c1c64;
-    --nav-link-color: #fff;
-    --nav-link-color-hover: #ae9aaa;
-    --crud-button-color: #ae9aaa;
-    --crud-button-color-hover: #bcb0c2;
-    --table-border: #ddd;
-    --table-head: #ae9aaa;
-    --form-popup: #f1f1f1;
-    --container-cancel: #af4c4c;
 
-    --exercise: #d3d5dc;
-    --meal: #d3d5dc;
-    --sleep: #d3d5dc;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 }
 
 body {
     display: flex;
     justify-content: center;
     height: 100vh;
-    font-family: var(--primary-font), Arial, Helvetica, sans-serif;
     font-size: 1em;
     background-image: url('../images/background-img.png');
     background-size: cover;
