@@ -63,15 +63,7 @@ public class ExerciseController {
     }
 
     @PostMapping(value = "/edit/{id}")
-    public String update(@PathVariable Long id, @ModelAttribute Exercise exercise, BindingResult result) {
-
-        if(result.hasErrors()) {
-
-            log.error("Validation Error: " + result.getAllErrors());
-
-            return "redirect:/crud?error=validation";
-
-        }
+    public String update(@PathVariable Long id, @ModelAttribute Exercise exercise) {
 
         service.update(id, exercise);
 

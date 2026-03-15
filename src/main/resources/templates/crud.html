@@ -60,6 +60,8 @@
 
         </header>
 
+
+        <!-- TABLES -->
         <section class="content" id="exercise">
 
             <article>
@@ -167,21 +169,28 @@
 
                 <tbody>
 
-                    <tr>
+                    <tr th:each="meal : ${meals}">
 
-                        <td>Data</td>
+                        <td th:text="${meal.registerDate}">Data</td>
 
-                        <td>Tipo da Refeição</td>
+                        <td th:text="${meal.type}">Tipo da Refeição</td>
 
-                        <td>Descrição da Refeição</td>
+                        <td th:text="${meal.description}">Descrição da Refeição</td>
 
-                        <td>Calorias</td>
+                        <td th:text="${meal.quantity}">Calorias</td>
 
-                        <td>
+                        <td class="table-actions">
 
-                            <a class="btn">Editar</a>
+                            <a href="javascript:void(0);"
+                             class="btn"
+                             th:attr="data-id=${meal.id},
+                             data-registerDate=${meal.registerDate},
+                             data-type=${meal.type},
+                             data-description=${meal.description},
+                             data-quantity=${meal.quantity}"
+                             onclick="updateMeal(this)">Editar</a>
 
-                            <a class="btn">Excluir</a>
+                            <a th:href="@{'/meal/delete/' + ${meal.id}}" class="btn">Excluir</a>
 
                         </td>
 
@@ -246,6 +255,7 @@
             </table>
         </section>
 
+        <!-- CREATE FORMS POPUPS -->
         <section class="form-popup" id="sleep-form">
 
             <form action="/sleep" method="post" class="form-container">
@@ -301,15 +311,15 @@
 
         <section class="form-popup" id="meal-form">
 
-            <form action="/meal" method="post" th:object="${meal}" class="form-container">
+            <form action="/meal/save" method="post" th:object="${meal}" class="form-container">
 
                 <h2 th:text="${meal.id != null ? 'Editar Refeição' : 'Adicionar Refeição'}">Adicionar Refeição</h2>
         
                 <label for="mealType">Tipo de Refeição:</label>
                 <input type="text" id="mealType" th:field="*{type}" required>
                 
-                <label for="mealName">Descrição da Refeição:</label>
-                <input type="text" id="mealName" th:field="*{name}" required>
+                <label for="mealDescription">Descrição da Refeição:</label>
+                <input type="text" id="mealDescription" th:field="*{description}" required>
 
         
                 <label for="mealQuantity">Quantidade de Calorias:</label>
@@ -325,11 +335,12 @@
 
         </section>
 
+        <!-- UPDATE FORMS POPUPS -->
         <section class="form-popup" id="update-exercise-form">
 
             <form method="post" class="form-container">
 
-                <input type="hidden" id="id" name="id">
+                <input type="hidden" id="idExercise" name="id">
         
                 <label for="updateExerciseDate">Data:</label>
                 <input type="date" id="updateExerciseDate" name="date" required>
@@ -357,6 +368,31 @@
 
         </section>
 
+        <section class="form-popup" id="update-meal-form">
+
+            <form method="post" class="form-container">
+
+                <input type="hidden" id="idMeal" name="id">
+        
+                <label for="updateMealType">Tipo de Refeição:</label>
+                <input type="text" id="updateMealType" name="type" required>
+                
+                <label for="updateMealDescription">Descrição da Refeição:</label>
+                <input type="text" id="updateMealDescription" name="description" required>
+
+        
+                <label for="updateMealQuantity">Quantidade de Calorias:</label>
+                <input type="number" id="updateMealQuantity" name="quantity" required>
+        
+                <label for="updateMealRegisterDate">Data:</label>
+                <input type="date" id="updateMealRegisterDate" name="registerDate" required>
+        
+                <button type="submit" class="btn">Salvar</button>
+                <button type="button" class="btn cancel" onclick="closeForm('update-meal-form')">Fechar</button>
+
+            </form>
+
+        </section>
 
     </main>
 

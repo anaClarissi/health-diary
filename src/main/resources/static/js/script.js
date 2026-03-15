@@ -12,17 +12,9 @@ function closeForm(formId) {
 
 function updateExercise(element) {
 
-    console.log("Botão clicado!"); // Verifica se a função é disparada
-    
-    const form = document.getElementById('update-exercise-form');
-    if (!form) {
-        alert("Erro: Formulário 'update-exercise-form' não encontrado no HTML!");
-        return;
-    }
-
     openForm('update-exercise-form')
 
-    document.getElementById('id').value = element.getAttribute("data-id");
+    document.getElementById('idExercise').value = element.getAttribute("data-id");
 
     document.getElementById('updateExerciseDate').value = element.getAttribute("data-date");
 
@@ -39,5 +31,25 @@ function updateExercise(element) {
     const id = element.getAttribute("data-id");
    
     document.querySelector("#update-exercise-form form").setAttribute("action", `/exercise/edit/${id}`);
+
+}
+
+function updateMeal(element) {
+
+    openForm('update-meal-form');
+
+    document.getElementById('idMeal').value = element.getAttribute("data-id");
+
+    document.getElementById('updateMealType').value = element.getAttribute("data-type");
+
+    document.getElementById('updateMealDescription').value = element.getAttribute("data-description");
+
+    document.getElementById('updateMealQuantity').value = element.getAttribute("data-quantity");
+
+    document.getElementById('updateMealRegisterDate').value = element.getAttribute("data-registerDate");
+
+    const id = element.getAttribute("data-id");
+
+    document.querySelector("#update-meal-form form").setAttribute("action", `/meal/edit/${id}`);
 
 }

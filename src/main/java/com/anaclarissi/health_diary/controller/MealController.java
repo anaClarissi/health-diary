@@ -2,65 +2,66 @@ package com.anaclarissi.health_diary.controller;
 
 import com.anaclarissi.health_diary.model.Meal;
 import com.anaclarissi.health_diary.service.MealService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
-import java.util.List;
-
-@RestController
+@Slf4j
+@Controller
 @RequestMapping(value = "/meal")
 public class MealController {
 
     @Autowired
     private MealService service;
 
-    @GetMapping
-    public ResponseEntity<List<Meal>> findAll() {
+    @GetMapping(value = "/list")
+    public String list(Model model) {
 
-        List<Meal> list = service.findAll();
+        model.addAttribute("meals", service.findAll());
 
-        return ResponseEntity.ok().body(list);
+        model.addAttribute("meal", new Meal());
 
-    }
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Meal> findById(@PathVariable Long id) {
-
-        Meal meal = service.findById(id);
-
-        return ResponseEntity.ok().body(meal);
+        return "crud";
 
     }
 
-    @PostMapping
-    public ResponseEntity<Meal> insert(@RequestBody Meal meal) {
+    @PostMapping(value = "/save")
+    public String save(@ModelAttribute Meal meal) {
 
-        meal = service.insert(meal);
+        service.insert(meal);
 
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(meal.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(meal);
+        return "redirect:/crud";
 
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+    @GetMapping(value = "/delete/{id}")
+    public String delete(@PathVariable Long id) {
 
         service.deleteById(id);
 
-        return ResponseEntity.noContent().build();
+        return "redirect:/crud";
 
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<Meal> update(@PathVariable Long id, @RequestBody Meal meal) {
+    @GetMapping(value = "/edit/{id}")
+    public String edit(@PathVariable Long id, Model model) {
 
-        meal = service.upadate(id, meal);
+        Meal meal = service.findById(id);
 
-        return ResponseEntity.ok().body(meal);
+        model.addAttribute("meal", meal);
+
+        return "crud";
+
+    }
+
+    @PostMapping(value = "/edit/{id}")
+    public String update(@PathVariable Long id, @ModelAttribute Meal meal) {
+
+        service.update(id, meal);
+
+        return "redirect:/crud";
 
     }
 

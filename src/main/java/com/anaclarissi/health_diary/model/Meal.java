@@ -5,8 +5,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "tb_meal")
@@ -19,9 +21,10 @@ public class Meal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
     private String type;
+    private String description;
     private Integer quantity;
-    private LocalDateTime registerDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate registerDate;
 
 }

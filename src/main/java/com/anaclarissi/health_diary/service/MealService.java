@@ -4,6 +4,7 @@ import com.anaclarissi.health_diary.model.Meal;
 import com.anaclarissi.health_diary.repository.MealRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -64,7 +65,8 @@ public class MealService {
 
     }
 
-    public Meal upadate(Long id, Meal meal) {
+    @Transactional
+    public Meal update(Long id, Meal meal) {
 
         try {
 
@@ -84,9 +86,9 @@ public class MealService {
 
     private void updateDate(Meal entity, Meal meal) {
 
-        entity.setName(meal.getName());
-
         entity.setType(meal.getType());
+
+        entity.setDescription(meal.getDescription());
 
         entity.setQuantity(meal.getQuantity());
 
