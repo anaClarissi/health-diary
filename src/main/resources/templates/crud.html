@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="html, css, java">
+    <meta name="description" content="Gerenciamento de Saúde Diária">
+    <meta name="author" content="Ana Clarissi">
+
+    <title>Gerenciamento de Saúde Diária</title>
+
+    <link rel="stylesheet" href="../static/css/reset.css">
+
+    <link rel="stylesheet" href="../static/css/crud-style.css" th:href="@{css/crud-style.css}">
+
+</head>
+<body>
+    
+    <main>
+
+        <header>
+
+            <section class="logo">
+
+                <img src="../static/images/logo.png" alt="Logo do Site" class="logo-img">
+
+            </section>
+
+            <nav>
+
+                <ul>
+
+                    <li>
+                        
+                        <a href="#">Exercicio</a>
+                    
+                    </li>
+                    
+                    <li>
+                        
+                        <a href="#">Refeição</a>
+                    
+                    </li>
+                    
+                    <li>
+                        
+                        <a href="#">Sono</a>
+                    
+                    </li>
+                    
+                    <li>
+                        
+                        <a href="#">Relatório</a>
+                    
+                    </li>
+
+                </ul>
+
+            </nav>
+
+        </header>
+
+        <section class="content">
+
+            <article>
+
+                <h2>Exercícios</h2>
+
+                <button class="btn-ad" onclick="openForm('exercise-form')">Adicionar Exercicio</button>
+
+            </article>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Data</th>
+
+                        <th>exercício</th>
+
+                        <th>Séries</th>
+
+                        <th>Repetições</th>
+
+                        <th>Carga</th>
+
+                        <th>Tempo</th>
+
+                        <th>Ações</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>Datas</td>
+                        
+                        <td>Nome</td>
+                        
+                        <td>Séries</td>
+                        
+                        <td>Repetições</td>
+                        
+                        <td>Carga</td>
+                        
+                        <td>Duração</td>
+
+                        <td class="table-actions">
+
+                            <a href="" class="btn">Editar</a>
+                            
+                            <a href="" class="btn">Excluir</a>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+        <section class="content">
+
+            <article>
+                
+                <h2>Refeições</h2>
+
+                <button class="btn-ad" onclick="openForm('meal-form')">Adicionar Refeição</button>
+
+            </article>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Data</th>
+
+                        <th>Tipo de refeição</th>
+
+                        <th>Descrição</th>
+
+                        <th>Calorias</th>  
+
+                        <th>Ações</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>Data</td>
+
+                        <td>Tipo da Refeição</td>
+
+                        <td>Descrição da Refeição</td>
+
+                        <td>Calorias</td>
+
+                        <td>
+
+                            <a class="btn">Editar</a>
+
+                            <a class="btn">Excluir</a>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+        <section class="content">
+
+            <article>
+
+                <h2>Sono</h2>
+
+                <button class="btn-ad" onclick="openForm('sleep-form')">Adicionar Registro de Sono</button>
+
+            </article>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Data</th>
+
+                        <th>Quantidade de Horas</th>
+
+                        <th>Qualidade</th>
+
+                        <th>Ações</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>Data</td>
+
+                        <td>Quantidade de Horas</td>
+
+                        <td>Qualidade</td>
+
+                        <td>
+
+                            <a class="btn">Editar</a>
+
+                            <a class="btn">Excluir</a>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+                
+            </table>
+        </section>
+
+        <section class="form-popup" id="sleep-form">
+
+            <form action="/sleep/save" method="post" class="form-container">
+
+                <h2>Adicionar Registro de Sono</h2>
+                    
+                <label for="horasDormidas">Horas Dormidas:</label>
+                <input type="number" id="horasDormidas" name="horasDormidas" required>
+                    
+                <label for="qualidade">Qualidade:</label>
+                <input type="text" id="qualidade" name="qualidade" required>
+                    
+                <label for="data">Data:</label>
+                <input type="date" id="data" name="data" required>
+            
+                <button type="submit" class="btn">Salvar</button>
+                <button type="button" class="btn cancel" onclick="closeForm('sleep-form')">Fechar</button>
+
+            </form>
+
+        </section>
+
+        <section class="form-popup" id="exercise-form">
+
+            <form action="/exercise/save" method="post" th:object="${exercise}" class="form-container">
+
+                <h2 th:text="${exercise.id != null ? 'Editar Exercício' : 'Adicionar Exercício'}">Adicionar Exercício</h2>
+        
+                <label for="data">Data:</label>
+                <input type="date" id="data" th:field="*{data}" required>
+
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" th:field="*{nome}" required>
+        
+                <label for="series">Quantidade de Séries:</label>
+                <input type="number" id="series" th:field="*{series}" required>
+        
+                <label for="repeticoes">Quantidade de Repetições:</label>
+                <input type="number" id="repeticoes" th:field="*{repeticoes}" required>
+        
+                <label for="carga">Carga (kg):</label>
+                <input type="number" id="carga" th:field="*{carga}" step="0.1" required>
+        
+                <label for="tempo">Duração (min):</label>
+                <input type="number" id="tempo" th:field="*{tempo}" required>
+        
+                <button type="submit" class="btn">Salvar</button>
+                <button type="button" class="btn cancel" onclick="closeForm('exercise-form')">Fechar</button>
+
+            </form>
+
+        </section>
+
+        <div class="form-popup" id="meal-form">
+
+            <form action="/meal/save" method="post" th:object="${meal}" class="form-container">
+
+                <h2 th:text="${meal.id != null ? 'Editar Refeição' : 'Adicionar Refeição'}">Adicionar Refeição</h2>
+        
+                <label for="tipo">Tipo de Refeição:</label>
+                <input type="text" id="tipo" th:field="*{tipo}" required>
+                
+                <label for="nome">Descrição da Refeição:</label>
+                <input type="text" id="nome" th:field="*{nome}" required>
+
+        
+                <label for="quantidade">Quantidade de Calorias:</label>
+                <input type="number" id="quantidade" th:field="*{quantidade}" required>
+        
+                <label for="data">Data:</label>
+                <input type="date" id="data" th:field="*{data}" required>
+        
+                <button type="submit" class="btn">Salvar</button>
+                <button type="button" class="btn cancel" onclick="closeForm('meal-form')">Fechar</button>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <script src="../static/js/script.js"></script>
+
+</body>
+</html>
