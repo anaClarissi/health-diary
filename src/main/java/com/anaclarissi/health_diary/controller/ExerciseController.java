@@ -1,66 +1,81 @@
 package com.anaclarissi.health_diary.controller;
 
 import com.anaclarissi.health_diary.model.Exercise;
-import com.anaclarissi.health_diary.service.ExcerciseService;
+import com.anaclarissi.health_diary.service.ExerciseService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
 
-@RestController
-@RequestMapping(value = "/excercise")
+@Slf4j
+@Controller
+@RequestMapping(value = "/exercise")
 public class ExerciseController {
 
     @Autowired
-    private ExcerciseService service;
+    private ExerciseService service;
 
-    @GetMapping
-    public ResponseEntity<List<Exercise>> findAll() {
+    @GetMapping(value = "/list")
+    public String list(Model model) {
 
-        List<Exercise> list = service.findAll();
+        model.addAttribute("exercises", service.findAll());
 
-        return ResponseEntity.ok().body(list);
+        model.addAttribute("exercise", new Exercise());
 
-    }
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Exercise> findById(@PathVariable Long id) {
-
-        Exercise exercise = service.findById(id);
-
-        return ResponseEntity.ok().body(exercise);
+        return "crud";
 
     }
 
-    @PostMapping
-    public ResponseEntity<Exercise> insert(@RequestBody Exercise exercise) {
+    @PostMapping(value = "/save")
+    public String save(@ModelAttribute Exercise exercise) {
 
-        exercise = service.insert(exercise);
+        service.insert(exercise);
 
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(exercise.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(exercise);
+        return "redirect:/crud";
 
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+    @GetMapping(value = "/delete/{id}")
+    public String delete(@PathVariable Long id) {
 
         service.deleteById(id);
 
-        return ResponseEntity.noContent().build();
+        return "redirect:/crud";
 
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<Exercise> update(@PathVariable Long id, @RequestBody Exercise exercise) {
+    @GetMapping(value = "/edit/{id}")
+    public String edit(@PathVariable Long id, Model model) {
 
-        exercise = service.update(id, exercise);
+        Exercise exercise = service.findById(id);
 
-        return ResponseEntity.ok().body(exercise);
+        model.addAttribute("exercise", exercise);
+
+        return "crud";
+
+    }
+
+    @PostMapping(value = "/edit/{id}")
+    public String update(@PathVariable Long id, @ModelAttribute Exercise exercise, BindingResult result) {
+
+        if(result.hasErrors()) {
+
+            log.error("Validation Error: " + result.getAllErrors());
+
+            return "redirect:/crud?error=validation";
+
+        }
+
+        service.update(id, exercise);
+
+        return "redirect:/crud";
 
     }
 

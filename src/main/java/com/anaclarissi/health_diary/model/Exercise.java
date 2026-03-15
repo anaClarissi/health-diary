@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -21,12 +22,13 @@ public class Exercise implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     private String name;
     private Integer series;
     private Integer repetitions;
     private Double load;
-    private LocalTime time;
+    private Integer time;
 
 
 }

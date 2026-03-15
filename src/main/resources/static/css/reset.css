@@ -11,5 +11,5 @@
 }
 
 body {
-    font-family: var(--font);
+    font-family: var(--font) !important;
 }

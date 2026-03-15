@@ -4,12 +4,13 @@ import com.anaclarissi.health_diary.model.Exercise;
 import com.anaclarissi.health_diary.repository.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ExcerciseService {
+public class ExerciseService {
 
     @Autowired
     private ExerciseRepository repository;
@@ -65,6 +66,7 @@ public class ExcerciseService {
 
     }
 
+    @Transactional
     public Exercise update(Long id, Exercise exercise) {
 
         try {

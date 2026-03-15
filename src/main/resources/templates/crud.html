@@ -9,7 +9,7 @@
 
     <title>Gerenciamento de Saúde Diária</title>
 
-    <link rel="stylesheet" href="../static/css/reset.css">
+    <link rel="stylesheet" href="../static/css/reset.css" th:href="@{css/reset.css}">
 
     <link rel="stylesheet" href="../static/css/crud-style.css" th:href="@{css/crud-style.css}">
 
@@ -22,7 +22,7 @@
 
             <section class="logo">
 
-                <img src="../static/images/logo.png" alt="Logo do Site" class="logo-img">
+                <img th:src="@{images/logo.png}" alt="Logo do Site" class="logo-img">
 
             </section>
 
@@ -32,19 +32,19 @@
 
                     <li>
                         
-                        <a href="#">Exercicio</a>
+                        <a href="#exercise">Exercicio</a>
                     
                     </li>
                     
                     <li>
                         
-                        <a href="#">Refeição</a>
+                        <a href="#meal">Refeição</a>
                     
                     </li>
                     
                     <li>
                         
-                        <a href="#">Sono</a>
+                        <a href="#sleep">Sono</a>
                     
                     </li>
                     
@@ -60,7 +60,7 @@
 
         </header>
 
-        <section class="content">
+        <section class="content" id="exercise">
 
             <article>
 
@@ -96,25 +96,34 @@
 
                 <tbody>
 
-                    <tr>
+                    <tr th:each="exercise : ${exercises}">
 
-                        <td>Datas</td>
+                        <td th:text="${exercise.date}">Datas</td>
                         
-                        <td>Nome</td>
+                        <td th:text="${exercise.name}">Nome</td>
                         
-                        <td>Séries</td>
+                        <td th:text="${exercise.series}">Séries</td>
                         
-                        <td>Repetições</td>
+                        <td th:text="${exercise.repetitions}">Repetições</td>
                         
-                        <td>Carga</td>
+                        <td th:text="${exercise.load}">Carga</td>
                         
-                        <td>Duração</td>
+                        <td th:text="${exercise.time}">Duração</td>
 
                         <td class="table-actions">
 
-                            <a href="" class="btn">Editar</a>
+                            <a href="javascript:void(0);"
+                            class="btn"
+                            th:attr="data-id=${exercise.id},
+                            data-date=${exercise.date},
+                            data-name=${exercise.name},
+                            data-series=${exercise.series},
+                            data-repetitions=${exercise.repetitions},
+                            data-load=${exercise.load},
+                            data-time=${exercise.time}"
+                            onclick="updateExercise(this)">Editar</a>
                             
-                            <a href="" class="btn">Excluir</a>
+                            <a th:href="@{'/exercise/delete/' + ${exercise.id}}" class="btn">Excluir</a>
 
                         </td>
 
@@ -126,7 +135,7 @@
 
         </section>
 
-        <section class="content">
+        <section class="content" id="meal">
 
             <article>
                 
@@ -184,7 +193,7 @@
 
         </section>
 
-        <section class="content">
+        <section class="content" id="sleep">
 
             <article>
 
@@ -239,18 +248,18 @@
 
         <section class="form-popup" id="sleep-form">
 
-            <form action="/sleep/save" method="post" class="form-container">
+            <form action="/sleep" method="post" class="form-container">
 
                 <h2>Adicionar Registro de Sono</h2>
                     
-                <label for="horasDormidas">Horas Dormidas:</label>
-                <input type="number" id="horasDormidas" name="horasDormidas" required>
+                <label for="hoursSlept">Horas Dormidas:</label>
+                <input type="number" id="hoursSlept" name="hoursSlept" required>
                     
-                <label for="qualidade">Qualidade:</label>
-                <input type="text" id="qualidade" name="qualidade" required>
+                <label for="sleepQuality">Qualidade:</label>
+                <input type="text" id="sleepQuality" name="sleepQuality" required>
                     
-                <label for="data">Data:</label>
-                <input type="date" id="data" name="data" required>
+                <label for="sleepRegisterDate">Data:</label>
+                <input type="date" id="sleepRegisterDate" name="registerDate" required>
             
                 <button type="submit" class="btn">Salvar</button>
                 <button type="button" class="btn cancel" onclick="closeForm('sleep-form')">Fechar</button>
@@ -265,23 +274,23 @@
 
                 <h2 th:text="${exercise.id != null ? 'Editar Exercício' : 'Adicionar Exercício'}">Adicionar Exercício</h2>
         
-                <label for="data">Data:</label>
-                <input type="date" id="data" th:field="*{data}" required>
+                <label for="exerciseDate">Data:</label>
+                <input type="date" id="exerciseDate" th:field="*{date}" required>
 
-                <label for="nome">Nome:</label>
-                <input type="text" id="nome" th:field="*{nome}" required>
+                <label for="exerciseName">Nome:</label>
+                <input type="text" id="exerciseName" th:field="*{name}" required>
         
-                <label for="series">Quantidade de Séries:</label>
-                <input type="number" id="series" th:field="*{series}" required>
+                <label for="exerciseSeries">Quantidade de Séries:</label>
+                <input type="number" id="exerciseSeries" th:field="*{series}" required>
         
-                <label for="repeticoes">Quantidade de Repetições:</label>
-                <input type="number" id="repeticoes" th:field="*{repeticoes}" required>
+                <label for="exerciseRepetitions">Quantidade de Repetições:</label>
+                <input type="number" id="exerciseRepetitions" th:field="*{repetitions}" required>
         
-                <label for="carga">Carga (kg):</label>
-                <input type="number" id="carga" th:field="*{carga}" step="0.1" required>
+                <label for="exerciseLoad">Carga (kg):</label>
+                <input type="number" id="exerciseLoad" th:field="*{load}" step="0.1" required>
         
-                <label for="tempo">Duração (min):</label>
-                <input type="number" id="tempo" th:field="*{tempo}" required>
+                <label for="exerciseTime">Duração (min):</label>
+                <input type="number" id="exerciseTime" th:field="*{time}" required>
         
                 <button type="submit" class="btn">Salvar</button>
                 <button type="button" class="btn cancel" onclick="closeForm('exercise-form')">Fechar</button>
@@ -290,35 +299,68 @@
 
         </section>
 
-        <div class="form-popup" id="meal-form">
+        <section class="form-popup" id="meal-form">
 
-            <form action="/meal/save" method="post" th:object="${meal}" class="form-container">
+            <form action="/meal" method="post" th:object="${meal}" class="form-container">
 
                 <h2 th:text="${meal.id != null ? 'Editar Refeição' : 'Adicionar Refeição'}">Adicionar Refeição</h2>
         
-                <label for="tipo">Tipo de Refeição:</label>
-                <input type="text" id="tipo" th:field="*{tipo}" required>
+                <label for="mealType">Tipo de Refeição:</label>
+                <input type="text" id="mealType" th:field="*{type}" required>
                 
-                <label for="nome">Descrição da Refeição:</label>
-                <input type="text" id="nome" th:field="*{nome}" required>
+                <label for="mealName">Descrição da Refeição:</label>
+                <input type="text" id="mealName" th:field="*{name}" required>
 
         
-                <label for="quantidade">Quantidade de Calorias:</label>
-                <input type="number" id="quantidade" th:field="*{quantidade}" required>
+                <label for="mealQuantity">Quantidade de Calorias:</label>
+                <input type="number" id="mealQuantity" th:field="*{quantity}" required>
         
-                <label for="data">Data:</label>
-                <input type="date" id="data" th:field="*{data}" required>
+                <label for="mealRegisterDate">Data:</label>
+                <input type="date" id="mealRegisterDate" th:field="*{registerDate}" required>
         
                 <button type="submit" class="btn">Salvar</button>
                 <button type="button" class="btn cancel" onclick="closeForm('meal-form')">Fechar</button>
 
             </form>
 
-        </div>
+        </section>
+
+        <section class="form-popup" id="update-exercise-form">
+
+            <form method="post" class="form-container">
+
+                <input type="hidden" id="id" name="id">
+        
+                <label for="updateExerciseDate">Data:</label>
+                <input type="date" id="updateExerciseDate" name="date" required>
+        
+                <label for="updateExerciseName">Nome:</label>
+                <input type="text" id="updateExerciseName" name="name" required>
+        
+                <label for="updateExerciseSeries">Quantidade de Séries:</label>
+                <input type="number" id="updateExerciseSeries" name="series" required>
+        
+                <label for="updateExerciseRepetitions">Quantidade de Repetições:</label>
+                <input type="number" id="updateExerciseRepetitions" name="repetitions" required>
+        
+                <label for="updateExerciseLoad">Carga (kg):</label>
+                <input type="number" id="updateExerciseLoad" name="load" step="0.1" required>
+        
+                <label for="updateExerciseTime">Duração (min):</label>
+                <input type="number" id="updateExerciseTime" name="time" required>
+        
+                <button type="submit" class="btn">Salvar</button>
+
+                <button type="button" class="btn cancel" onclick="closeForm('update-exercise-form')">Cancelar</button>
+
+            </form>
+
+        </section>
+
 
     </main>
 
-    <script src="../static/js/script.js"></script>
+    <script th:src="@{js/script.js}"></script>
 
 </body>
 </html>
