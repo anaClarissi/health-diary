@@ -8,11 +8,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum SleepQuality {
 
-    VERY_BAD(1, "very bad sleep"),
-    BAD(2, "bad Sleep"),
-    MODERATE(3, "moderate sleep"),
-    GOOD(4, "good sleep"),
-    VERY_GOOD(5, "very good sleep");
+    VERY_BAD(1, "muito ruim"),
+    BAD(2, "ruim"),
+    MODERATE(3, "moderado"),
+    GOOD(4, "bom"),
+    VERY_GOOD(5, "muito bom");
 
     private final Integer quality;
 

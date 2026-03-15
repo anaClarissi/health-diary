@@ -232,19 +232,25 @@
 
                 <tbody>
 
-                    <tr>
+                    <tr th:each="sleep : ${sleeps}">
 
-                        <td>Data</td>
+                        <td th:text="${sleep.registerDate}">Data</td>
 
-                        <td>Quantidade de Horas</td>
+                        <td th:text="${sleep.hoursSlept}">Quantidade de Horas</td>
 
-                        <td>Qualidade</td>
+                        <td th:text="${sleep.sleepQuality.description}">Qualidade</td>
 
-                        <td>
+                        <td class="table-actions">
 
-                            <a class="btn">Editar</a>
+                            <a href="javascript:void(0)"
+                            th:attr="data-id=${sleep.id},
+                            data-hoursSlept=${sleep.hoursSlept},
+                            data-sleepQuality=${sleep.sleepQuality.name()},
+                            data-registerDate=${sleep.registerDate}"
+                            onclick="updateSleep(this)"
+                            class="btn">Editar</a>
 
-                            <a class="btn">Excluir</a>
+                            <a th:href="@{'/sleep/delete/' + ${sleep.id}}" class="btn">Excluir</a>
 
                         </td>
 
@@ -258,18 +264,27 @@
         <!-- CREATE FORMS POPUPS -->
         <section class="form-popup" id="sleep-form">
 
-            <form action="/sleep" method="post" class="form-container">
+            <form action="/sleep/save" method="post" th:object="${sleep}" class="form-container">
 
-                <h2>Adicionar Registro de Sono</h2>
+                <h2>Adicionar Sono</h2>
                     
                 <label for="hoursSlept">Horas Dormidas:</label>
-                <input type="number" id="hoursSlept" name="hoursSlept" required>
+                <input type="number" id="hoursSlept" th:field="*{hoursSlept}" required>
                     
                 <label for="sleepQuality">Qualidade:</label>
-                <input type="text" id="sleepQuality" name="sleepQuality" required>
+                <select id="sleepQuality" th:field="*{sleepQuality}" required>
+
+                    <option value="" disabled selected>Selecione a qualidade</option>
+
+                    <option th:each="quality : ${T(com.anaclarissi.health_diary.model.enums.SleepQuality).values()}"
+                    th:value="${quality}"
+                    th:text="${quality.description}"
+                    ></option>
+
+                </select>
                     
                 <label for="sleepRegisterDate">Data:</label>
-                <input type="date" id="sleepRegisterDate" name="registerDate" required>
+                <input type="date" id="sleepRegisterDate" th:field="*{registerDate}" required>
             
                 <button type="submit" class="btn">Salvar</button>
                 <button type="button" class="btn cancel" onclick="closeForm('sleep-form')">Fechar</button>
@@ -282,7 +297,7 @@
 
             <form action="/exercise/save" method="post" th:object="${exercise}" class="form-container">
 
-                <h2 th:text="${exercise.id != null ? 'Editar Exercício' : 'Adicionar Exercício'}">Adicionar Exercício</h2>
+                <h2>Adicionar Exercício</h2>
         
                 <label for="exerciseDate">Data:</label>
                 <input type="date" id="exerciseDate" th:field="*{date}" required>
@@ -313,7 +328,7 @@
 
             <form action="/meal/save" method="post" th:object="${meal}" class="form-container">
 
-                <h2 th:text="${meal.id != null ? 'Editar Refeição' : 'Adicionar Refeição'}">Adicionar Refeição</h2>
+                <h2>Adicionar Refeição</h2>
         
                 <label for="mealType">Tipo de Refeição:</label>
                 <input type="text" id="mealType" th:field="*{type}" required>
@@ -393,6 +408,40 @@
             </form>
 
         </section>
+
+        <section class="form-popup" id="update-sleep-form">
+
+            <form method="post" class="form-container">
+
+                <h2>Editar Sono</h2>
+
+                <input type="hidden" id="idSleep" name="id">
+                    
+                <label for="updateHoursSlept">Horas Dormidas:</label>
+                <input type="number" id="updateHoursSlept" name="hoursSlept" required>
+                    
+                <label for="updateSleepQuality">Qualidade:</label>
+                <select id="updateSleepQuality" name="sleepQuality" required>
+
+                    <option value="" disabled selected>Selecione a qualidade</option>
+
+                    <option th:each="quality : ${T(com.anaclarissi.health_diary.model.enums.SleepQuality).values()}"
+                    th:value="${quality}"
+                    th:text="${quality.description}"
+                    ></option>
+
+                </select>
+                    
+                <label for="updateSleepRegisterDate">Data:</label>
+                <input type="date" id="updateSleepRegisterDate" name="registerDate" required>
+            
+                <button type="submit" class="btn">Salvar</button>
+                <button type="button" class="btn cancel" onclick="closeForm('update-sleep-form')">Fechar</button>
+
+            </form>
+
+        </section>
+
 
     </main>
 

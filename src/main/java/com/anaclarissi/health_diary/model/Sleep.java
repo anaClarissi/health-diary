@@ -5,9 +5,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "tb_sleep")
@@ -20,11 +20,12 @@ public class Sleep {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalTime hoursSlept;
+    private Integer hoursSlept;
 
     @Enumerated(EnumType.STRING)
     private SleepQuality sleepQuality;
 
-    private LocalDateTime registerDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate registerDate;
 
 }

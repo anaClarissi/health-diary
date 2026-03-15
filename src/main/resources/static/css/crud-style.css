@@ -174,7 +174,9 @@ td {
 
 .form-container input[type="text"],
 .form-container input[type="number"],
-.form-container input[type="date"] {
+.form-container input[type="date"],
+.form-container select
+{
     width: 100%;
     padding: 10px;
     margin: 5px 0 10px 0;

@@ -4,6 +4,7 @@ import com.anaclarissi.health_diary.model.Sleep;
 import com.anaclarissi.health_diary.repository.SleepRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -65,6 +66,7 @@ public class SleepService {
 
     }
 
+    @Transactional
     public Sleep update(Long id, Sleep sleep) {
 
         try {

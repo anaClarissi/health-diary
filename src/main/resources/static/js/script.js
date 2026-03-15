@@ -53,3 +53,23 @@ function updateMeal(element) {
     document.querySelector("#update-meal-form form").setAttribute("action", `/meal/edit/${id}`);
 
 }
+
+function updateSleep(element) {
+
+    openForm('update-sleep-form');
+
+    document.getElementById('idSleep').value = element.getAttribute("data-id");
+
+    document.getElementById('updateHoursSlept').value = element.getAttribute("data-hoursSlept");
+
+    document.getElementById('updateSleepRegisterDate').value = element.getAttribute("data-registerDate");
+
+    const qualityValue = element.getAttribute("data-sleepQuality");
+
+    document.getElementById('updateSleepQuality').value = qualityValue;
+
+    const id = element.getAttribute("data-id");
+
+    document.querySelector("#update-sleep-form form").setAttribute("action", `/sleep/edit/${id}`);
+
+}
